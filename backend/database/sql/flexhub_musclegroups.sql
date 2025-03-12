@@ -1,0 +1,1 @@
+INSERT INTO `muscle_groups` VALUES (1,'Hát'),(2,'Csukja'),(3,'Váll'),(4,'Mell'),(5,'Bicepsz'),(6,'Tricepsz'),(7,'Alkar'),(8,'Has'),(9,'Fenék'),(10,'Comb'),(11,'Vádli');
