@@ -15,6 +15,7 @@ class AddressesController extends Controller
 
    public function GetAddress($id)
   {
+     $id = (int) $id;
      $address = Addresses::find($id);
      if ($address) {
         return response()->json($address);

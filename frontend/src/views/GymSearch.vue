@@ -10,12 +10,37 @@ interface Gym {
   price_group: string;
 }
 
+interface Address {
+  id: string;
+  city_id: string;
+  street: string;
+  street_number: string;
+}
+
+interface City {
+  id: string;
+  name: string;
+}
+
 const gyms = ref<Gym[]>([]);
+const addresses = ref<Record<string, Address>>({});
+const cities = ref<Record<string, City>>({});
 
 onMounted(async () => {
   try {
-    const response = await api.getGyms();
-    gyms.value = response.data;
+    const gymResponse = await api.getGyms();
+    gyms.value = gymResponse.data;
+    for (const gym of gyms.value) {
+      if (!addresses.value[gym.address_id]) {
+        const addressResponse = await api.getAddressById(gym.address_id);
+        addresses.value[gym.address_id] = addressResponse.data;
+
+        if (!cities.value[addresses.value[gym.address_id].city_id]) {
+          const cityResponse = await api.getCityById(addresses.value[gym.address_id].city_id);
+          cities.value[addresses.value[gym.address_id].city_id] = cityResponse.data;
+        }
+      }
+    }
   } catch (error) {
     console.error('Error fetching gyms:', error);
   }
@@ -36,8 +61,13 @@ onMounted(async () => {
        <div class="gym-card" v-for="gym in gyms" :key="gym.id">
          <h2>{{ gym.name }}</h2>
          <hr>
-         <p><strong>Cím:</strong> {{ gym.address_id }}</p>
-         <p><strong>URL:</strong> <a :href="gym.url" target="_blank">Weboldal/Facebook oldal</a></p>
+         <p v-if="addresses[gym.address_id] && cities[addresses[gym.address_id].city_id]">
+           <strong>Cím:</strong>
+           {{ cities[addresses[gym.address_id].city_id].name }},
+           {{ addresses[gym.address_id].street }}
+           {{ addresses[gym.address_id].street_number }}
+         </p>
+         <p><strong>URL:</strong> <a :href="gym.url" target="_blank">{{ gym.url }}</a></p>
          <p><strong>Árkategória:</strong> {{ gym.price_group }}</p>
        </div>
      </div>

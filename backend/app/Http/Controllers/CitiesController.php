@@ -15,6 +15,7 @@ class CitiesController extends Controller
 
    public function GetCity($id)
    {
+      $id = (int) $id;
       $city = Cities::find($id);
       if ($city) {
          return response()->json($city);
