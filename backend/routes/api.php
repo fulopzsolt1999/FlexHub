@@ -2,10 +2,15 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GymsController;
 use App\Http\Controllers\CitiesController;
 use App\Http\Controllers\DaysController;
 use App\Http\Controllers\AddressesController;
+
+
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
 
 Route::get('/gyms', [GymsController::class, 'GetAllGyms']);
 

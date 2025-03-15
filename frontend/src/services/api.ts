@@ -5,6 +5,16 @@ const apiClient: AxiosInstance = axios.create({
     baseURL: import.meta.env.VITE_API_URL as string
 });
 
+// Define the API response type for register and login
+interface AuthResponse {
+    message: string;
+    user?: {
+        id: string;
+        user_name: string;
+        email: string;
+    };
+}
+
 // Define the Gym type
 interface Gym {
     id: string;
@@ -44,6 +54,12 @@ interface CityResponse {
 }
 
 export default {
+    register(data: { user_name: string; email: string; password: string }): Promise<AxiosResponse<AuthResponse>> {
+        return apiClient.post<AuthResponse>('/register', data);
+    },
+    login(data: { user_name: string; password: string }): Promise<AxiosResponse<AuthResponse>> {
+        return apiClient.post<AuthResponse>('/login', data);
+    },
     getGyms(): Promise<AxiosResponse<GymListResponse>> {
     return apiClient.get<GymListResponse>('/gyms');
     },
@@ -53,5 +69,4 @@ export default {
     getCityById(id: string): Promise<AxiosResponse<CityResponse>> {
         return apiClient.get<CityResponse>(`/cities/${id}`);
     },
-// További API hívások hozzáadása itt
 };

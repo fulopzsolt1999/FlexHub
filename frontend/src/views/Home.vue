@@ -1,14 +1,16 @@
 <template>
-   <header>
-     <h1>Főoldal</h1>
-   </header>
- 
-   <main>
-     <nav>
-       <router-link to="/">Főoldal</router-link>
-       <router-link to="/gym-search">Edzőterem kereső</router-link>
-     </nav>
-   </main>
+  <div class="container">
+    <header>
+    <h1 class="text-center my-4">Főoldal</h1>
+    </header>
+
+    <main>
+      <div class="welcome">
+        <h2>Üdv</h2>
+      </div>
+    </main>
+  </div>
+
 </template>
 
 <script setup lang="ts">

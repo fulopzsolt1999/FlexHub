@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { RouterView, RouterLink } from 'vue-router';
+import { RouterView } from 'vue-router';
+import BSNavbar from "@/components/BSNavbar.vue";
 </script>
 
 <template>
-  <nav>
-    <router-link to="/">Főoldal</router-link>
-    <router-link to="/gym-search">Edzőterem kereső</router-link>
-  </nav>
+  <div id="wrapper">
+    <BSNavbar />
+  </div>
   <router-view></router-view>
 </template>

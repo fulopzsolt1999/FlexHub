@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
 import api from '../services/api.ts';
 
 interface Gym {
@@ -25,7 +25,10 @@ interface City {
 const gyms = ref<Gym[]>([]);
 const addresses = ref<Record<string, Address>>({});
 const cities = ref<Record<string, City>>({});
+const searchQuery = ref('');
+const sortOrder = ref('');
 
+// Fetch gyms, addresses, and cities
 onMounted(async () => {
   try {
     const gymResponse = await api.getGyms();
@@ -45,6 +48,26 @@ onMounted(async () => {
     console.error('Error fetching gyms:', error);
   }
 });
+
+
+// Computed property to filter and sort gyms
+const filteredAndSortedGyms = computed(() => {
+  let filteredGyms = gyms.value.filter(gym => {
+    const address = addresses.value[gym.address_id];
+    const city = address && cities.value[address.city_id];
+    const matchesSearch = gym.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+        (city && city.name.toLowerCase().includes(searchQuery.value.toLowerCase()));
+    return matchesSearch;
+  });
+
+  if (sortOrder.value === 'asc') {
+    filteredGyms.sort((a, b) => a.price_group.length - b.price_group.length);
+  } else if (sortOrder.value === 'desc') {
+    filteredGyms.sort((a, b) => b.price_group.length - a.price_group.length);
+  }
+
+  return filteredGyms;
+});
 </script>
 
 <template>
@@ -53,12 +76,16 @@ onMounted(async () => {
    </header>
 
    <main>
-     <nav>
-       <router-link to="/">Főoldal</router-link>
-       <router-link to="/gym-search">Edzőterem kereső</router-link>
-     </nav>
+     <div class="search-sort">
+       <input type="text" v-model="searchQuery" placeholder="Keresés név vagy város alapján...">
+       <select v-model="sortOrder">
+         <option value="">Rendezés ár szerint</option>
+         <option value="asc">Ár (növekvő)</option>
+         <option value="desc">Ár (csökkenő)</option>
+       </select>
+     </div>
      <div class="gym-cards">
-       <div class="gym-card" v-for="gym in gyms" :key="gym.id">
+       <div class="gym-card" v-for="gym in filteredAndSortedGyms" :key="gym.id">
          <h2>{{ gym.name }}</h2>
          <hr>
          <p v-if="addresses[gym.address_id] && cities[addresses[gym.address_id].city_id]">
@@ -67,8 +94,8 @@ onMounted(async () => {
            {{ addresses[gym.address_id].street }}
            {{ addresses[gym.address_id].street_number }}
          </p>
-         <p><strong>URL:</strong> <a :href="gym.url" target="_blank">{{ gym.url }}</a></p>
          <p><strong>Árkategória:</strong> {{ gym.price_group }}</p>
+         <p>Bővebb információért<br><a :href="gym.url" target="_blank">Kattints ide</a>.</p>
        </div>
      </div>
    </main>
