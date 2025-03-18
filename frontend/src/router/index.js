@@ -4,6 +4,8 @@ import GymSearchView from "../views/GymSearch.vue";
 import AboutView from "../views/About.vue";
 import RegisterView from '../views/Register.vue';
 import LoginView from '../views/Login.vue';
+import WorkoutPlanView from '../views/WorkoutPlan.vue';
+import AdminView from '../views/Admin.vue';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,6 +14,11 @@ const router = createRouter({
             path: "/",
             name: "Home",
             component: HomeView
+        },
+        {
+            path: "/admin",
+            name: "Admin",
+            component: AdminView
         },
         {
             path: '/register',
@@ -32,6 +39,11 @@ const router = createRouter({
             path: "/about",
             name: "About",
             component: AboutView
+        },
+        {
+            path: "/workout-plan",
+            name: "WorkoutPlan",
+            component: WorkoutPlanView
         }
     ]
 })

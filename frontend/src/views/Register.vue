@@ -1,22 +1,59 @@
 <template>
-  <div class="container">
-    <h1>Regisztráció</h1>
-    <form @submit.prevent="handleRegister">
-      <div>
-        <label for="name">Felhasználónév:</label>
-        <input type="text" id="name" v-model="userName" required />
+  <div class="container mt-5">
+    <h1 class="mb-4">Regisztráció</h1>
+    <p v-if="message" class="alert alert-danger mt-3">{{ message }}</p>
+    <form @submit.prevent="handleRegister" class="needs-validation" novalidate>
+      <div class="mb-3">
+        <label for="userName" class="form-label">Felhasználónév:</label>
+        <input
+          type="text"
+          id="userName"
+          v-model="userName"
+          class="form-control"
+          :class="{ 'is-invalid': errors.userName }"
+          required
+        />
+        <div class="invalid-feedback">{{ errors.userName }}</div>
       </div>
-      <div>
-        <label for="email">Email:</label>
-        <input type="email" id="email" v-model="email" required />
+      <div class="mb-3">
+        <label for="email" class="form-label">Email:</label>
+        <input
+          type="email"
+          id="email"
+          v-model="email"
+          class="form-control"
+          :class="{ 'is-invalid': errors.email }"
+          required
+        />
+        <div class="invalid-feedback">{{ errors.email }}</div>
       </div>
-      <div>
-        <label for="password">Jelszó:</label>
-        <input type="password" id="password" v-model="password" required />
+      <div class="mb-3">
+        <label for="password" class="form-label">Jelszó:</label>
+        <input
+          type="password"
+          id="password"
+          v-model="password"
+          class="form-control"
+          :class="{ 'is-invalid': errors.password }"
+          required
+        />
+        <div class="invalid-feedback">{{ errors.password }}</div>
       </div>
-      <button type="submit">Regisztráció</button>
+      <div class="mb-3">
+        <label for="passwordAgain" class="form-label">Jelszó megerősítése:</label>
+        <input
+          type="password"
+          id="passwordAgain"
+          v-model="passwordAgain"
+          class="form-control"
+          :class="{ 'is-invalid': errors.passwordAgain }"
+          required
+        />
+        <div class="invalid-feedback">{{ errors.passwordAgain }}</div>
+      </div>
+      <button type="submit" class="btn btn-primary">Regisztráció</button>
     </form>
-    <p v-if="message">{{ message }}</p>
+
   </div>
 </template>
 
@@ -27,12 +64,58 @@ import api from '../services/api';
 const userName = ref('');
 const email = ref('');
 const password = ref('');
+const passwordAgain = ref('');
 const message = ref('');
+const errors = ref({
+  userName: '',
+  email: '',
+  password: '',
+  passwordAgain: '',
+});
 
 const handleRegister = async () => {
+  // Reset errors
+  errors.value = {
+    userName: '',
+    email: '',
+    password: '',
+    passwordAgain: '',
+  };
+
+  let hasError = false;
+
+  if (password.value !== passwordAgain.value) {
+    errors.value.passwordAgain = 'A jelszavak nem egyeznek.';
+    hasError = true;
+  }
+
+  if (password.value.length < 8) {
+    errors.value.password = 'A jelszónak legalább 8 karakter hosszúnak kell lennie.';
+    hasError = true;
+  }
+
+  if (!/^[a-zA-Z0-9]+$/.test(userName.value)) {
+    errors.value.userName = 'A felhasználónév csak betűket és számokat tartalmazhat.';
+    hasError = true;
+  }
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+    errors.value.email = 'Érvényes email címet kell megadni.';
+    hasError = true;
+  }
+
+  if (hasError) {
+    return;
+  }
+
   try {
-    const response = await api.register({ user_name: userName.value, email: email.value, password: password.value });
-    message.value = response.data.message;
+    const response = await api.register({
+      user_name: userName.value,
+      email: email.value,
+      password: password.value,
+    });
+    alert(response.data.message);
+    window.location.href = '/login';
   } catch (error) {
     message.value = 'Hiba történt a regisztráció során.';
     console.error(error);
