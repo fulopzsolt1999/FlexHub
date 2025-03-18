@@ -109,7 +109,7 @@ const fetchExercisesForDay = async (dayId: number) => {
     if (!userId) {
       throw new Error('A felhasználói azonosító nem érhető el a munkamenet tárolójában.');
     }
-    const response = await api.getWorkoutPlan(userId, dayId);    
+    const response = await api.getWorkoutPlans(userId, dayId);    
     if (Array.isArray(response.data)) {
       exercisesByDay.value[dayId] = response.data.map((exercise: any) => ({
         id: exercise.id,

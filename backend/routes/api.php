@@ -35,4 +35,5 @@ Route::get('/muscle-groups', [MuscleGroupController::class, 'GetAll']);
 Route::get('/exercises/{muscleGroupId}', [ExerciseController::class, 'GetByMuscleGroup']);
 
 Route::post('/workout-plan/{userId}/{dayName}', [WorkoutPlanController::class, 'SaveWorkoutPlan']);
+Route::get('/workout-plans/{userId}/{dayId}', [WorkoutPlanController::class, 'GetWorkoutPlans']);
 Route::get('/workout-plan/{userId}/{dayId}', [WorkoutPlanController::class, 'GetWorkoutPlan']);

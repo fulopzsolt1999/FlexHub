@@ -127,6 +127,32 @@ const fetchExercises = async () => {
   }
 };
 
+const fetchAddedExercises = async () => {
+  try {
+    const userId = sessionStorage.getItem('userId');
+    if (!userId) {
+      throw new Error('User ID is missing from session storage.');
+    }
+
+    const response = await api.getWorkoutPlan(userId, dayId);
+    if (Array.isArray(response.data)) {
+      addedExercises.value = response.data.map((exercise: any) => ({
+        userId,
+        dayId,
+        muscleGroupId: exercise.muscle_group_id,
+        muscleGroupName: exercise.muscle_group_name,
+        exerciseId: exercise.exercise_id,
+        exerciseName: exercise.exercise_name,
+        sets: exercise.sets,
+        reps: exercise.reps,
+        comment: exercise.comment,
+      }));
+    }
+  } catch (error) {
+    console.error('Hiba történt a korábban hozzáadott gyakorlatok betöltésekor:', error);
+  }
+};
+
 const addExercise = () => {
   if (!selectedMuscleGroup.value || !selectedExercise.value || !sets.value || !reps.value) {
     return;
@@ -199,8 +225,11 @@ const saveExercises = async () => {
 };
 
 const goBack = () => {
-  router.push('/workoutplan');
+  router.push('/workout-plan');
 };
 
-onMounted(fetchMuscleGroups);
+onMounted(async () => {
+  await fetchMuscleGroups();
+  await fetchAddedExercises();
+});
 </script>

@@ -12,6 +12,22 @@ class WorkoutPlanController extends Controller
         try {
             $exercises = WorkoutPlan::where('user_id', $request->userId)
                 ->where('day_id', $request->dayId)
+                ->join('muscle_groups', 'workout_plans.muscle_group_id', '=', 'muscle_groups.id')
+                ->join('exercises', 'workout_plans.exercise_id', '=', 'exercises.id')
+                ->select('workout_plans.*', 'muscle_groups.name as muscle_group_name', 'exercises.name as exercise_name')
+                ->get();
+
+            return response()->json($exercises);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Hiba történt', 'error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function GetWorkoutPlans(Request $request)
+    {
+        try {
+            $exercises = WorkoutPlan::where('user_id', $request->userId)
+                ->where('day_id', $request->dayId)
                 ->join('exercises', 'workout_plans.exercise_id', '=', 'exercises.id')
                 ->select('workout_plans.*', 'exercises.name', 'exercises.image')
                 ->get();

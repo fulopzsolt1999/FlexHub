@@ -78,19 +78,6 @@ interface WorkoutPlan {
     comment: string;
 }
 
-interface WorkoutPlanExercise {
-    id: string;
-    user_id: string;
-    day_id: string;
-    mouscle_group_id: string;
-    exercise_id: string;
-    series: string;
-    reps: string;
-    comment: string;
-    exercise_name: string;
-    image: string;
-}
-
 // Define the API response type for a list of gyms
 interface GymListResponse {
     gyms: Gym[];
@@ -135,11 +122,6 @@ interface WorkoutPlanResponse {
     workout: WorkoutPlan;
 }
 
-
-interface WorkoutPlanExerciseResponse {
-    workout: WorkoutPlanExercise;
-}
-
 export default {
     register(data: { user_name: string; email: string; password: string }): Promise<AxiosResponse<AuthResponse>> {
         return apiClient.post<AuthResponse>('/register', data);
@@ -174,8 +156,11 @@ export default {
     getExercisesByMuscleGroup(muscleGroupId: string): Promise<AxiosResponse<ExerciseResponse>> {
         return apiClient.get<ExerciseResponse>(`/exercises/${muscleGroupId}`);
     },
-    getWorkoutPlan(userId: string, dayId: number): Promise<AxiosResponse<WorkoutPlanExerciseResponse>> {
-        return apiClient.get<WorkoutPlanExerciseResponse>(`/workout-plan/${userId}/${dayId}`);
+    getWorkoutPlans(userId: string, dayId: number): Promise<AxiosResponse<WorkoutPlanResponse>> {
+        return apiClient.get<WorkoutPlanResponse>(`/workout-plans/${userId}/${dayId}`);
+    },
+    getWorkoutPlan(userId: string, dayId: number): Promise<AxiosResponse<WorkoutPlanResponse>> {
+        return apiClient.get<WorkoutPlanResponse>(`/workout-plan/${userId}/${dayId}`);
     },
     saveWorkoutPlan(userId: string, dayId: number, exercises: any[]): Promise<AxiosResponse<WorkoutPlanResponse>> {
         return apiClient.post<WorkoutPlanResponse>(`/workout-plan/${userId}/${dayId}`, { exercises });
