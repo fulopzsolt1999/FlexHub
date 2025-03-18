@@ -8,6 +8,9 @@ use App\Http\Controllers\CitiesController;
 use App\Http\Controllers\DaysController;
 use App\Http\Controllers\AddressesController;
 use App\Http\Controllers\RestDayController;
+use App\Http\Controllers\MuscleGroupController;
+use App\Http\Controllers\ExerciseController;
+use App\Http\Controllers\WorkoutPlanController;
 
 
 Route::post('/register', [AuthController::class, 'register']);
@@ -26,3 +29,10 @@ Route::get('/addresses', [AddressesController::class, 'GetAllAddress']);
 Route::post('/rest-days/{userId}/{dayId}', [RestDayController::class, 'CreateRestDay']);
 Route::delete('/rest-days/{userId}/{dayId}', [RestDayController::class, 'DeleteRestDay']);
 Route::get('/rest-days/{userId}', [RestDayController::class, 'GetAllRestDays']);
+
+Route::get('/muscle-groups', [MuscleGroupController::class, 'GetAll']);
+
+Route::get('/exercises/{muscleGroupId}', [ExerciseController::class, 'GetByMuscleGroup']);
+
+Route::post('/workout-plan/{userId}/{dayName}', [WorkoutPlanController::class, 'SaveWorkoutPlan']);
+Route::get('/workout-plan/{userId}/{dayId}', [WorkoutPlanController::class, 'GetWorkoutPlan']);

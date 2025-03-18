@@ -51,6 +51,46 @@ interface Address {
     street_number: string;
 }
 
+// Define the MuscleGroup type
+interface MuscleGroup {
+    id: string;
+    name: string;
+}
+
+// Define the Exercise type
+interface Exercise {
+    id: string;
+    name: string;
+    muscle_group_id: string;
+    image: string;
+    video: string;
+}
+
+// Define the WorkoutPlan type
+interface WorkoutPlan {
+    id: string;
+    user_id: string;
+    day_id: string;
+    mouscle_group_id: string;
+    exercise_id: string;
+    series: string;
+    reps: string;
+    comment: string;
+}
+
+interface WorkoutPlanExercise {
+    id: string;
+    user_id: string;
+    day_id: string;
+    mouscle_group_id: string;
+    exercise_id: string;
+    series: string;
+    reps: string;
+    comment: string;
+    exercise_name: string;
+    image: string;
+}
+
 // Define the API response type for a list of gyms
 interface GymListResponse {
     gyms: Gym[];
@@ -76,8 +116,28 @@ interface CityResponse {
     city: City;
 }
 
+// Define the API response type for a single rest day
 interface RestDayResponse {
     rest_day: RestDay;
+}
+
+// Define the API response type for a list of muscle groups
+interface MouscleGroupResponse {
+    muscle_group: MuscleGroup;
+}
+
+// Define the API response type for a list of exercises
+interface ExerciseResponse {
+    exercise: Exercise;
+}
+
+interface WorkoutPlanResponse {
+    workout: WorkoutPlan;
+}
+
+
+interface WorkoutPlanExerciseResponse {
+    workout: WorkoutPlanExercise;
 }
 
 export default {
@@ -107,5 +167,17 @@ export default {
     },
     deleteRestDay(userId: string, dayId: string): Promise<AxiosResponse<RestDayResponse>> {
         return apiClient.delete<RestDayResponse>(`/rest-days/${userId}/${dayId}`);
+    },
+    getMuscleGroups(): Promise<AxiosResponse<MouscleGroupResponse>> {
+        return apiClient.get<MouscleGroupResponse>('/muscle-groups');
+    },
+    getExercisesByMuscleGroup(muscleGroupId: string): Promise<AxiosResponse<ExerciseResponse>> {
+        return apiClient.get<ExerciseResponse>(`/exercises/${muscleGroupId}`);
+    },
+    getWorkoutPlan(userId: string, dayId: number): Promise<AxiosResponse<WorkoutPlanExerciseResponse>> {
+        return apiClient.get<WorkoutPlanExerciseResponse>(`/workout-plan/${userId}/${dayId}`);
+    },
+    saveWorkoutPlan(userId: string, dayId: number, exercises: any[]): Promise<AxiosResponse<WorkoutPlanResponse>> {
+        return apiClient.post<WorkoutPlanResponse>(`/workout-plan/${userId}/${dayId}`, { exercises });
     }
 };

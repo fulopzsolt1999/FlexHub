@@ -6,6 +6,7 @@ import RegisterView from '../views/Register.vue';
 import LoginView from '../views/Login.vue';
 import WorkoutPlanView from '../views/WorkoutPlan.vue';
 import AdminView from '../views/Admin.vue';
+import ModifyWorkoutPlanView from '../views/ModifyWorkoutPlan.vue';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,7 +45,13 @@ const router = createRouter({
             path: "/workout-plan",
             name: "WorkoutPlan",
             component: WorkoutPlanView
-        }
+        },
+        {
+            path: '/modify-workout-plan/:dayName/:dayId',
+            name: 'ModifyWorkoutPlan',
+            component: ModifyWorkoutPlanView,
+            props: true
+        },
     ]
 })
 
