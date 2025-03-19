@@ -129,6 +129,12 @@ export default {
     login(data: { user_name: string; password: string }): Promise<AxiosResponse<AuthResponse>> {
         return apiClient.post<AuthResponse>('/login', data);
     },
+    forgotPassword(data: { email: string }): Promise<AxiosResponse<{ message: string }>> {
+        return apiClient.post('/forgot-password', data);
+    },
+    resetPassword(data: { token: string; password: string; password_confirmation: string }): Promise<AxiosResponse<{ message: string }>> {
+        return apiClient.post('/reset-password', data);
+    },
     getGyms(): Promise<AxiosResponse<GymListResponse>> {
     return apiClient.get<GymListResponse>('/gyms');
     },

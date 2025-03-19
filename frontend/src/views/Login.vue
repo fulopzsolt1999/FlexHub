@@ -26,7 +26,10 @@
         />
         <div class="invalid-feedback">{{ errors.password }}</div>
       </div>
-      <button type="submit" class="btn btn-primary">Bejelentkezés</button>
+      <div class="d-flex justify-content-between align-items-center">
+        <button type="submit" class="btn btn-primary">Bejelentkezés</button>
+        <a href="/forgot-password" class="text-decoration-none">Elfelejtett jelszó?</a>
+      </div>
     </form>
     <p v-if="message" class="alert alert-danger mt-3">{{ message }}</p>
   </div>

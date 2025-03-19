@@ -11,10 +11,14 @@ use App\Http\Controllers\RestDayController;
 use App\Http\Controllers\MuscleGroupController;
 use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\WorkoutPlanController;
+use App\Http\Controllers\ForgotPasswordController;
 
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink']);
+Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword']);
 
 Route::get('/gyms', [GymsController::class, 'GetAllGyms']);
 
