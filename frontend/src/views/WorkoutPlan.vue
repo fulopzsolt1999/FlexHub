@@ -49,7 +49,7 @@
                       <td>{{ exercise.reps }}</td>
                       <td>{{ exercise.comment || 'Nincs megjegyzés' }}</td>
                       <td>
-                        <img :src="exercise.image" alt="Gyakorlat képe" class="img-thumbnail" style="max-width: 100px;" />
+                        <img :src="`/src/assets/images/Exercises/${exercise.image}`" alt="Gyakorlat képe" class="img-thumbnail" style="max-width: 100px;" />
                       </td>
                     </tr>
                   </tbody>

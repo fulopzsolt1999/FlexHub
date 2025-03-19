@@ -37,10 +37,21 @@ class WorkoutPlanController extends Controller
         }
     }
 
+    public function DeleteWorkoutPlan(Request $request)
+    {
+        try {
+            WorkoutPlan::where('user_id', (int) $request->userId)
+                ->where('day_id', (int) $request->dayId)
+                ->delete();
+            return response()->json(['message' => 'Edzésterv törölve']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Hiba történt', 'error' => $e->getMessage()], 500);
+        }
+    }
+
     public function SaveWorkoutPlan(Request $request)
     {
         try {
-            WorkoutPlan::where('user_id', $request->userId)->where('day_id', $request->day_id)->delete();
             foreach ($request->exercises as $exercise) {
                 WorkoutPlan::create([
                     'user_id' => $exercise['user_id'],

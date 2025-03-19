@@ -162,6 +162,9 @@ export default {
     getWorkoutPlan(userId: string, dayId: number): Promise<AxiosResponse<WorkoutPlanResponse>> {
         return apiClient.get<WorkoutPlanResponse>(`/workout-plan/${userId}/${dayId}`);
     },
+    deleteWorkoutPlan(userId: string, dayId: number): Promise<AxiosResponse<WorkoutPlanResponse>> {
+        return apiClient.delete<WorkoutPlanResponse>(`/workout-plan/${userId}/${dayId}`);
+    },
     saveWorkoutPlan(userId: string, dayId: number, exercises: any[]): Promise<AxiosResponse<WorkoutPlanResponse>> {
         return apiClient.post<WorkoutPlanResponse>(`/workout-plan/${userId}/${dayId}`, { exercises });
     }
