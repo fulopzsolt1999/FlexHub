@@ -48,7 +48,7 @@ const superUser = ref(false);
 
 const checkLoginStatus = () => {
   const userId = sessionStorage.getItem('userId');
-  if (userId === import.meta.env.VITE_ADMIN_USER_ID) {
+  if (sessionStorage.getItem('isAdmin') === 'true') {
     superUser.value = true;
   }
   isLoggedIn.value = !!userId;
@@ -56,8 +56,10 @@ const checkLoginStatus = () => {
 
 const logout = () => {
   sessionStorage.removeItem('userId');
+  sessionStorage.removeItem('isAdmin');
   isLoggedIn.value = false;
   superUser.value = false;
+  alert('Sikeres kijelentkezés!');
   router.push('/');
 };
 

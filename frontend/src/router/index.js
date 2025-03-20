@@ -19,9 +19,10 @@ const router = createRouter({
             component: HomeView
         },
         {
-            path: "/admin",
-            name: "Admin",
-            component: AdminView
+            path: '/admin',
+            name: 'Admin',
+            component: AdminView,
+            meta: { requiresAuth: true, isAdmin: true },
         },
         {
             path: '/register',

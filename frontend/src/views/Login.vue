@@ -75,6 +75,7 @@ const handleLogin = async () => {
     const userId = response.data?.user?.id;
     if (userId) {
       sessionStorage.setItem('userId', userId);
+      sessionStorage.setItem('isAdmin', response.data?.user?.is_admin ? 'true' : 'false');
       alert('Sikeres bejelentkezés!');
       window.location.href = '/';
     }

@@ -2,7 +2,23 @@ import axios from 'axios';
 import type { AxiosInstance, AxiosResponse } from 'axios';
 
 const apiClient: AxiosInstance = axios.create({
-    baseURL: import.meta.env.VITE_API_URL as string
+    baseURL: import.meta.env.VITE_API_URL as string,
+    withCredentials: true,
+});
+
+// Interceptor hozzáadása az Axios-hoz, hogy minden kéréshez hozzáadjuk a userId-t és isAdmin-t
+apiClient.interceptors.request.use((config) => {
+    const userId = sessionStorage.getItem('userId');
+    const isAdmin = sessionStorage.getItem('isAdmin');
+
+    if (userId) {
+        config.headers['X-User-Id'] = userId;
+    }
+    if (isAdmin) {
+        config.headers['X-Is-Admin'] = isAdmin;
+    }
+
+    return config;
 });
 
 // Define the API response type for register and login
@@ -12,6 +28,7 @@ interface AuthResponse {
         id: string;
         user_name: string;
         email: string;
+        is_admin: string;
     };
 }
 
@@ -173,5 +190,14 @@ export default {
     },
     saveWorkoutPlan(userId: string, dayId: number, exercises: any[]): Promise<AxiosResponse<WorkoutPlanResponse>> {
         return apiClient.post<WorkoutPlanResponse>(`/workout-plan/${userId}/${dayId}`, { exercises });
-    }
+    },
+    getTotalUsers(): Promise<AxiosResponse<{ total_users: number }>> {
+        return apiClient.get('/admin/total-users');
+    },
+    getWorkoutPlanStats(): Promise<AxiosResponse<{ users_with_workout_plans: number; percentage_with_workout_plans: number }>> {
+        return apiClient.get('/admin/workout-plan-stats');
+    },
+    getMonthlyStats(): Promise<AxiosResponse<{ monthly_users: { month: string; total_users: number }[]; monthly_workout_plans: { month: string; users_with_workout_plans: number }[] }>> {
+        return apiClient.get('/admin/monthly-stats');
+    },
 };

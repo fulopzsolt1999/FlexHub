@@ -12,7 +12,11 @@ use App\Http\Controllers\MuscleGroupController;
 use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\WorkoutPlanController;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\AdminController;
 
+Route::get('/admin/total-users', [AdminController::class, 'getTotalUsers']);
+Route::get('/admin/workout-plan-stats', [AdminController::class, 'getWorkoutPlanStats']);
+Route::get('/admin/monthly-stats', [AdminController::class, 'getMonthlyStats']);
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
