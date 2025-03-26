@@ -1,7 +1,9 @@
 <template>
-  <div class="container mt-5">
-    <h1 class="mb-4">Bejelentkezés</h1>
-    <form @submit.prevent="handleLogin" class="needs-validation" novalidate>
+  <div class="container mt-5 p-4 w-50">
+    <h1>Bejelentkezés</h1>
+    <hr>
+    <p v-if="message" class="alert alert-danger mt-3">{{ message }}</p>
+    <form @submit.prevent="handleLogin" class="needs-validation mx-5" novalidate>
       <div class="mb-3">
         <label for="userName" class="form-label">Felhasználónév:</label>
         <input
@@ -10,6 +12,7 @@
           v-model="userName"
           class="form-control"
           :class="{ 'is-invalid': errors.userName }"
+          autocomplete="off"
           required
         />
         <div class="invalid-feedback">{{ errors.userName }}</div>
@@ -22,16 +25,19 @@
           v-model="password"
           class="form-control"
           :class="{ 'is-invalid': errors.password }"
+          autocomplete="off"
           required
         />
         <div class="invalid-feedback">{{ errors.password }}</div>
       </div>
-      <div class="d-flex justify-content-between align-items-center">
-        <button type="submit" class="btn btn-primary">Bejelentkezés</button>
-        <a href="/forgot-password" class="text-decoration-none">Elfelejtett jelszó?</a>
+      <div class="d-flex justify-content-center my-4">
+        <button type="submit" class="btn w-50 mt-2">Bejelentkezés</button>
+      </div>
+      <div class="d-flex justify-content-center">
+        <a href="/forgot-password">Elfelejtett jelszó?</a>
       </div>
     </form>
-    <p v-if="message" class="alert alert-danger mt-3">{{ message }}</p>
+
   </div>
 </template>
 

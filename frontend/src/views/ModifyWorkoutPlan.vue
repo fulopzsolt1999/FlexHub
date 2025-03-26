@@ -1,12 +1,12 @@
 <template>
-  <div class="container mt-5">
+  <div class="container my-5 p-4">
     <div class="row">
-      <!-- Bal oszlop -->
       <div class="col-md-6">
         <h3>Gyakorlat hozzáadása</h3>
+        <hr>
         <button class="btn btn-secondary mb-3" @click="goBack">Vissza az edzéstervekre</button>
         <div class="mb-3">
-          <div class="alert alert-info text-center h4"><strong>{{ dayName }}</strong></div>
+          <div class="alert text-center h4"><strong>{{ dayName }}</strong></div>
         </div>
         <form @submit.prevent="addExercise">
           <div class="mb-3">
@@ -16,8 +16,7 @@
               class="form-select"
               v-model="selectedMuscleGroup"
               @change="fetchExercises"
-              required
-            >
+              required>
               <option value="" disabled>Válassz izomcsoportot</option>
               <option v-for="group in muscleGroups" :key="group.id" :value="group.id">
                 {{ group.name }}
@@ -31,8 +30,7 @@
               <option
                 v-for="exercise in filteredExercises"
                 :key="exercise.id"
-                :value="exercise.id"
-              >
+                :value="exercise.id">
                 {{ exercise.name }}
               </option>
             </select>
@@ -49,26 +47,26 @@
             <label for="comment" class="form-label">Megjegyzés</label>
             <textarea id="comment" class="form-control" v-model="comment"></textarea>
           </div>
-          <button type="submit" class="btn btn-primary">Hozzáadás</button>
+          <div class="d-flex justify-content-center">
+            <button type="submit" class="btn w-50 my-3">Hozzáadás</button>
+          </div>
         </form>
 
-        <!-- Gyakorlat kép és videó link -->
-        <div v-if="selectedExerciseDetails" class="mt-4 text-center">
+        <div v-if="selectedExerciseDetails" class="my-4 text-center">
           <a :href="selectedExerciseDetails.video" target="_blank">
             <img
               :src="`/src/assets/images/Exercises/${selectedExerciseDetails.image}`"
               alt="Gyakorlat képe"
               class="img-thumbnail"
-              style="max-width: 300px; cursor: pointer;"
               @click="navigateToVideo"
             />
           </a>
         </div>
       </div>
 
-      <!-- Jobb oszlop -->
       <div class="col-md-6">
         <h3>{{ dayName }} naphoz tartozó gyakorlatok</h3>
+        <hr>
         <div
           v-for="(exercise, index) in addedExercises"
           :key="index"
@@ -76,20 +74,26 @@
           draggable="true"
           @dragstart="dragStart(index)"
           @dragover.prevent
-          @drop="drop(index)"
-        >
-          <div class="card-body">
-            <h5 class="card-title">{{ exercise.exerciseName }}</h5>
-            <p class="card-text">
-              <strong>Izomcsoport:</strong> {{ exercise.muscleGroupName }}<br />
-              <strong>Szettek:</strong> {{ exercise.sets }}<br />
-              <strong>Ismétlések:</strong> {{ exercise.reps }}<br />
-              <strong>Megjegyzés:</strong> {{ exercise.comment || 'Nincs' }}
-            </p>
-            <button class="btn btn-danger" @click="removeExercise(index)">Törlés</button>
+          @drop="drop(index)">
+          <div class="card-body row">
+            <div class="col-xl-10 col-12">
+              <h5 class="card-title">{{ exercise.exerciseName }}</h5>
+              <hr>
+              <p class="card-text">
+                <strong>Izomcsoport:</strong> {{ exercise.muscleGroupName }}<br />
+                <strong>Szettek:</strong> {{ exercise.sets }}<br />
+                <strong>Ismétlések:</strong> {{ exercise.reps }}<br />
+                <strong>Megjegyzés:</strong> {{ exercise.comment || 'Nincs' }}
+              </p>
+            </div>
+            <div class="col-xl-2 col-12 d-flex justify-content-center align-items-center">
+              <button class="btn btn-danger my-3 px-0" @click="removeExercise(index)">Törlés</button>
+            </div>
           </div>
         </div>
-        <button class="btn btn-success mt-3" @click="saveExercises">Módosítás mentése</button>
+        <div class="d-flex justify-content-center">
+          <button class="btn my-3 w-50" @click="saveExercises">Módosítás mentése</button>
+        </div>
       </div>
     </div>
   </div>
@@ -267,3 +271,21 @@ onMounted(async () => {
   await fetchAddedExercises();
 });
 </script>
+
+<style scoped>
+  .alert {
+    background-color: var(--secondary-bg);
+  }
+  .img-thumbnail {
+    max-width: 90%;
+    cursor: pointer;
+  }
+  .btn-danger {
+    width: 100%;
+    height: 3rem;
+  }
+  .card {
+    background-color: var(--secondary-bg);
+    color: var(--primary-text);
+  }
+</style>

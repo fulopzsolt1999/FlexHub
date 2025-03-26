@@ -1,8 +1,9 @@
-<!-- filepath: d:\FlexHub\frontend\src\views\ForgotPassword.vue -->
 <template>
-  <div class="container mt-5">
-    <h1 class="mb-4">Elfelejtett jelszó</h1>
-    <form @submit.prevent="handleForgotPassword">
+  <div class="container mt-5 p-4 w-50">
+    <h1>Elfelejtett jelszó</h1>
+    <hr>
+    <p v-if="message" class="alert alert-info mt-3">{{ message }}</p>
+    <form @submit.prevent="handleForgotPassword" class="needs-validation mx-5">
       <div class="mb-3">
         <label for="email" class="form-label">E-mail cím:</label>
         <input
@@ -13,9 +14,10 @@
           required
         />
       </div>
-      <button type="submit" class="btn btn-primary">Jelszó visszaállítás</button>
+      <div class="d-flex justify-content-center">
+        <button type="submit" class="btn w-50 mt-2">Jelszó visszaállítás</button>
+      </div>
     </form>
-    <p v-if="message" class="alert alert-info mt-3">{{ message }}</p>
   </div>
 </template>
 

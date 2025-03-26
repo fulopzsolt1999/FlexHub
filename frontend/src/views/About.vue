@@ -1,75 +1,49 @@
 <template>
-  <div class="about-page">
-    <!-- Rólam rész -->
-    <div class="container about-me">
+  <div class="container p-3 d-flex justify-content-center align-items-center flex-column">
+    <div class="about-me mt-5">
       <h2>Rólam</h2>
       <hr />
-      <div class="content">
-        <img src="" alt="Junior Frontend Fejlesztő" />
-        <div class="text">
+      <div class="d-flex justify-content-center align-items-center flex-row row gap-3">
+        <img class="col-md-6 col-12" src="../assets/images/Zsolt.jpg" alt="Junior Frontend Fejlesztő" />
+        <div class="col-md-6 col-12">
           <p>
-            Kisebb szöveg rólam. Lorem ipsum dolor sit amet, consectetur
-            adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante
-            dapibus diam.
+            2023-ban kezdtem meg tanulmányaimat a Ruander Oktatási Központ, Junior Frontend Fejlesztő tanfolyamon.
+            Miután ezt elvégeztem kezdhettem a Webfejlesztés tanfolyamot, amire készítettem ezt a vizsgaremeket.
           </p>
         </div>
       </div>
     </div>
-
-    <!-- A projektről rész -->
-    <div class="container about-project">
-      <h2>A projektről</h2>
+    <div class="about-project mt-5">
+      <h2>A projektemről</h2>
       <hr />
-      <p>
-        Kevés szöveg a projektről. Lorem ipsum dolor sit amet, consectetur
-        adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante
-        dapibus diam.
-      </p>
+      <div class="d-flex justify-content-center align-items-center flex-row">
+        <p>
+          Ez a projekt egy interaktív weboldal létrehozását tűzte ki célul, amely megkönnyíti a felhasználók számára
+          az edzőtermek keresését és saját edzésterveik létrehozását. A felhasználók különböző szűrési lehetőségekkel
+          böngészhetnek az adatbázisban található edzőtermek között, majd bejelentkezés után személyre szabott
+          edzésterveket hozhatnak létre. A regisztráció és a bejelentkezés folyamata egyszerű és biztonságos, így a
+          felhasználók könnyen hozzáférhetnek a weboldal nyújtotta összes funkcióhoz. A projekt célja egy átlátható
+          és felhasználóbarát rendszer kialakítása, amely segíti a sportolni vágyókat céljaik elérésében.
+        </p>
+      </div>
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
-// Import statements if needed
-</script>
-
 <style scoped>
-.about-page {
-  padding: 20px;
-}
-
-.container {
-  margin-bottom: 40px;
-}
-
-.about-me .content {
-  display: flex;
-  align-items: center;
-}
-
-.about-me img {
-  max-width: 150px;
-  margin-right: 20px;
-  border-radius: 50%;
-}
-
-.about-me .text {
-  max-width: 600px;
-}
-
-.about-me h2,
-.about-project h2 {
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-
-hr {
-  border: none;
-  border-top: 2px solid #333;
-  margin-bottom: 20px;
-}
-
-.about-project p {
-  max-width: 600px;
-}
+  .container {
+    width: 80%;
+  }
+  .about-me,
+  .about-project {
+    width: 80%;
+  }
+  img {
+    max-width: 12rem;
+    border-radius: 50%;
+  }
+  p {
+    max-width: 40rem;
+    text-indent: 1rem;
+  }
 </style>

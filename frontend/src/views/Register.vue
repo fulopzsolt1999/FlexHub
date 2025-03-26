@@ -1,8 +1,9 @@
 <template>
-  <div class="container mt-5">
-    <h1 class="mb-4">Regisztráció</h1>
+  <div class="container mt-5 p-4 w-50">
+    <h1>Regisztráció</h1>
+    <hr>
     <p v-if="message" class="alert alert-danger mt-3">{{ message }}</p>
-    <form @submit.prevent="handleRegister" class="needs-validation" novalidate>
+    <form @submit.prevent="handleRegister" class="needs-validation mx-5" novalidate>
       <div class="mb-3">
         <label for="userName" class="form-label">Felhasználónév:</label>
         <input
@@ -11,6 +12,7 @@
           v-model="userName"
           class="form-control"
           :class="{ 'is-invalid': errors.userName }"
+          autocomplete="off"
           required
         />
         <div class="invalid-feedback">{{ errors.userName }}</div>
@@ -23,6 +25,7 @@
           v-model="email"
           class="form-control"
           :class="{ 'is-invalid': errors.email }"
+          autocomplete="off"
           required
         />
         <div class="invalid-feedback">{{ errors.email }}</div>
@@ -35,6 +38,7 @@
           v-model="password"
           class="form-control"
           :class="{ 'is-invalid': errors.password }"
+          autocomplete="off"
           required
         />
         <div class="invalid-feedback">{{ errors.password }}</div>
@@ -47,13 +51,15 @@
           v-model="passwordAgain"
           class="form-control"
           :class="{ 'is-invalid': errors.passwordAgain }"
+          autocomplete="off"
           required
         />
         <div class="invalid-feedback">{{ errors.passwordAgain }}</div>
       </div>
-      <button type="submit" class="btn btn-primary">Regisztráció</button>
+      <div class="d-flex justify-content-center">
+        <button type="submit" class="btn w-50 mt-2">Regisztráció</button>
+      </div>
     </form>
-
   </div>
 </template>
 

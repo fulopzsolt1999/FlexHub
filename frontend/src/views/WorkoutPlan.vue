@@ -1,17 +1,13 @@
 <template>
-  <div class="container mt-5">
-    <h1 class="mb-4">Edzésterv</h1>
+  <div class="container my-3 p-4">
     <div v-if="loading" class="text-center">Betöltés...</div>
     <div v-else>
-      <div
-        class="row"
-        v-for="day in days"
-        :key="day.id"
-      >
+      <div class="row" v-for="day in days" :key="day.id">
         <div class="col-12 mb-4">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">{{ day.name }}</h5>
+              <h4 class="card-title">{{ day.name }}</h4>
+              <hr>
               <div class="d-flex align-items-center mb-3">
                 <div class="form-check form-switch me-3">
                   <input
@@ -25,14 +21,10 @@
                 </div>
               </div>
               <div v-if="!restDays.includes(day.id)">
-                <button
-                  class="btn btn-primary ms-auto"
-                  type="button"
-                  @click="goToModifyWorkoutPlan(day.name)"
-                >
+                <button class="btn btn-primary ms-auto" type="button" @click="goToModifyWorkoutPlan(day.name)">
                   Gyakorlatok módosítása/hozzáadása
                 </button>
-                <table class="table table-bordered mt-3">
+                <table class="table table-bordered table-striped table-hover table-dark text-center mt-3">
                   <thead>
                     <tr>
                       <th>Gyakorlat neve</th>
@@ -49,7 +41,8 @@
                       <td>{{ exercise.reps }}</td>
                       <td>{{ exercise.comment || 'Nincs megjegyzés' }}</td>
                       <td>
-                        <img :src="`/src/assets/images/Exercises/${exercise.image}`" alt="Gyakorlat képe" class="img-thumbnail" style="max-width: 100px;" />
+                        <img :src="`/src/assets/images/Exercises/${exercise.image}`" alt="Gyakorlat képe"
+                             class="img-thumbnail" style="max-width: 100px;" />
                       </td>
                     </tr>
                   </tbody>
@@ -184,3 +177,25 @@ onMounted(async () => {
   await fetchAllExercises();
 });
 </script>
+
+<style scoped>
+  .container {
+    background-color: unset;
+  }
+  h1{
+    width: fit-content;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: var(--primary-text);
+    border-radius: 20%;
+  }
+  .card {
+    background-color: var(--secondary-bg);
+    color: white;
+  }
+  .form-check input {
+    background-color: var(--secondary-text);
+  }
+  .form-check input:checked {
+    background-color: var(--highlight);
+  }
+</style>

@@ -1,3 +1,36 @@
+<template>
+  <div class="container my-5">
+    <h1 class="m-auto my-3">Edzőterem kereső</h1>
+    <div class="search-sort form-group mt-4 m-auto">
+      <input
+          type="text"
+          class="form-control mb-3"
+          v-model="searchQuery"
+          placeholder="Keresés név vagy város alapján..."
+          autocomplete="off">
+      <select v-model="sortOrder" class="form-control">
+        <option value="">Rendezés ár szerint</option>
+        <option value="asc">Ár (növekvő)</option>
+        <option value="desc">Ár (csökkenő)</option>
+      </select>
+    </div>
+    <div class="gym-cards mt-5 d-flex justify-content-center flex-wrap gap-3">
+     <div class="gym-card p-3" v-for="gym in filteredAndSortedGyms" :key="gym.id">
+       <h3 class="text-center">{{ gym.name }}</h3>
+       <hr>
+       <p v-if="addresses[gym.address_id] && cities[addresses[gym.address_id].city_id]">
+         <strong>Cím:</strong>
+         {{ cities[addresses[gym.address_id].city_id].name }},
+         {{ addresses[gym.address_id].street }}
+         {{ addresses[gym.address_id].street_number }}
+       </p>
+       <p><strong>Árkategória:</strong> {{ gym.price_group }}</p>
+       <p class="mt-4" id="info">Bővebb információért<br><a :href="gym.url" target="_blank">Kattints ide</a></p>
+     </div>
+    </div>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { ref, onMounted, computed, watch } from 'vue';
 import api from '../services/api.ts';
@@ -70,65 +103,31 @@ const filteredAndSortedGyms = computed(() => {
 });
 </script>
 
-<template>
-   <header>
-     <h1>Edzőterem kereső</h1>
-   </header>
-
-   <main>
-     <div class="search-sort">
-       <input type="text" v-model="searchQuery" placeholder="Keresés név vagy város alapján...">
-       <select v-model="sortOrder">
-         <option value="">Rendezés ár szerint</option>
-         <option value="asc">Ár (növekvő)</option>
-         <option value="desc">Ár (csökkenő)</option>
-       </select>
-     </div>
-     <div class="gym-cards">
-       <div class="gym-card" v-for="gym in filteredAndSortedGyms" :key="gym.id">
-         <h2>{{ gym.name }}</h2>
-         <hr>
-         <p v-if="addresses[gym.address_id] && cities[addresses[gym.address_id].city_id]">
-           <strong>Cím:</strong>
-           {{ cities[addresses[gym.address_id].city_id].name }},
-           {{ addresses[gym.address_id].street }}
-           {{ addresses[gym.address_id].street_number }}
-         </p>
-         <p><strong>Árkategória:</strong> {{ gym.price_group }}</p>
-         <p>Bővebb információért<br><a :href="gym.url" target="_blank">Kattints ide</a>.</p>
-       </div>
-     </div>
-   </main>
- </template>
-
 <style scoped>
-.gym-cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  justify-content: center;
-  padding: 16px;
-}
-
-.gym-card {
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 16px;
-  width: 300px;
-  text-align: center;
-}
-
-.gym-card h2 {
-  margin-top: 0;
-}
-
-.gym-card hr {
-  margin: 16px 0;
-}
-
-.gym-card p {
-  margin: 8px 0;
-}
+  .container {
+    background-color: unset;
+  }
+  .search-sort {
+    width: 25rem;
+  }
+  h1 {
+    width: fit-content;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: var(--primary-text);
+    border-radius: 20%;
+  }
+  .gym-card {
+    width: 25rem;
+    background-color: var(--primary-bg);
+    color: var(--primary-text);
+    border: 1px solid var(--highlight);
+    border-radius: 15px;
+  }
+  p {
+    margin: 0.5rem 0;
+    text-align: center;
+  }
+  #info {
+    color: var(--secondary-text);
+  }
 </style>

@@ -1,7 +1,9 @@
 <template>
   <nav class="navbar navbar-expand-md bg-body-tertiary">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Logo</a>
+      <div class="navbar-brand">
+        <img src="../assets/images/flexhub.png" width="30px" alt="FlexHub Logo" /> FlexHub
+      </div>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
               aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -68,3 +70,8 @@ onMounted(() => {
 });
 </script>
 
+<style scoped>
+  .navbar-brand {
+    color: var(--primary-text);
+  }
+</style>

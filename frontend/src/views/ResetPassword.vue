@@ -1,8 +1,9 @@
-<!-- filepath: d:\FlexHub\frontend\src\views\ResetPassword.vue -->
 <template>
-  <div class="container mt-5">
-    <h1 class="mb-4">Új jelszó megadása</h1>
-    <form @submit.prevent="handleResetPassword">
+  <div class="container mt-5 p-4 w-50">
+    <h1>Új jelszó megadása</h1>
+    <hr>
+    <p v-if="message" class="alert alert-info mt-3">{{ message }}</p>
+    <form @submit.prevent="handleResetPassword" class="needs-validation mx-5">
       <div class="mb-3">
         <label for="password" class="form-label">Új jelszó:</label>
         <input
@@ -23,9 +24,10 @@
           required
         />
       </div>
-      <button type="submit" class="btn btn-primary">Jelszó megváltoztatása</button>
+      <div class="d-flex justify-content-center">
+        <button type="submit" class="btn w-50 mt-2">Jelszó megváltoztatás</button>
+      </div>
     </form>
-    <p v-if="message" class="alert alert-info mt-3">{{ message }}</p>
   </div>
 </template>
 

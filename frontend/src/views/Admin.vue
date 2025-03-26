@@ -1,6 +1,7 @@
 <template>
-  <div class="container mt-5">
+  <div class="container my-5 p-4">
     <h1>Admin Felület</h1>
+    <hr>
     <div class="row">
       <div class="col-md-4">
         <h3>Regisztrált felhasználók</h3>
@@ -16,7 +17,8 @@
       </div>
     </div>
     <div class="mt-5">
-      <h3>{{ currentYear }}-i regisztrációk és edzéstervek</h3>
+      <h3>{{ currentYear }}-ös regisztrációk és edzéstervek</h3>
+      <hr>
       <canvas id="monthlyRegistrationsChart"></canvas>
     </div>
   </div>
@@ -40,21 +42,17 @@ const monthNames = [
 const currentYear = new Date().getFullYear();
 
 const fetchAdminData = async () => {
-  // Regisztrált felhasználók száma
   const usersResponse = await api.getTotalUsers();
   totalUsers.value = usersResponse.data.total_users;
 
-  // Edzésterv statisztikák
   const workoutPlanStatsResponse = await api.getWorkoutPlanStats();
   usersWithWorkoutPlans.value = workoutPlanStatsResponse.data.users_with_workout_plans;
   percentageWithWorkoutPlans.value = workoutPlanStatsResponse.data.percentage_with_workout_plans;
 
-  // Havi statisztikák
   const monthlyStatsResponse = await api.getMonthlyStats();
   const monthlyUsers = monthlyStatsResponse.data.monthly_users;
   const monthlyWorkoutPlans = monthlyStatsResponse.data.monthly_workout_plans;
 
-  // Egyesítsük a két adatot egy tömbbe
   monthlyStats.value = monthNames.map((_, index) => {
     const month = `${currentYear}-${String(index + 1).padStart(2, '0')}`;
     const userStat = monthlyUsers.find((user) => user.month === month) || { total_users: 0 };
@@ -95,6 +93,13 @@ const renderChart = () => {
     },
     options: {
       responsive: true,
+      scales: {
+        y: {
+          ticks: {
+            stepSize: 1,
+          },
+        },
+      },
       plugins: {
         legend: {
           position: 'top',

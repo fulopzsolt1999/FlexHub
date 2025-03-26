@@ -6,7 +6,6 @@ const apiClient: AxiosInstance = axios.create({
     withCredentials: true,
 });
 
-// Interceptor hozzáadása az Axios-hoz, hogy minden kéréshez hozzáadjuk a userId-t és isAdmin-t
 apiClient.interceptors.request.use((config) => {
     const userId = sessionStorage.getItem('userId');
     const isAdmin = sessionStorage.getItem('isAdmin');
@@ -21,7 +20,6 @@ apiClient.interceptors.request.use((config) => {
     return config;
 });
 
-// Define the API response type for register and login
 interface AuthResponse {
     message: string;
     user?: {
@@ -32,7 +30,6 @@ interface AuthResponse {
     };
 }
 
-// Define the Gym type
 interface Gym {
     id: string;
     name: string;
@@ -41,26 +38,22 @@ interface Gym {
     price_group: string;
 }
 
-// Define the City type
 interface City {
     id: string;
     name: string;
 }
 
-// Define the Day type
 interface Day {
     id: string;
     name: string;
 }
 
-// Define the RestDay type
 interface RestDay {
     id: string;
     user_id: string;
     day_id: string;
 }
 
-// Define the Address type
 interface Address {
     id: string;
     city_id: string;
@@ -68,13 +61,11 @@ interface Address {
     street_number: string;
 }
 
-// Define the MuscleGroup type
 interface MuscleGroup {
     id: string;
     name: string;
 }
 
-// Define the Exercise type
 interface Exercise {
     id: string;
     name: string;
@@ -83,7 +74,6 @@ interface Exercise {
     video: string;
 }
 
-// Define the WorkoutPlan type
 interface WorkoutPlan {
     id: string;
     user_id: string;
@@ -95,42 +85,34 @@ interface WorkoutPlan {
     comment: string;
 }
 
-// Define the API response type for a list of gyms
 interface GymListResponse {
     gyms: Gym[];
 }
 
-// Define the API response type for a list of days
 interface DayListResponse {
     days: Day[];
 }
 
-// Define the API response type for a list of days
 interface RestDayListResponse {
     rest_days: RestDay[];
 }
 
-// Define the API response type for a single address
 interface AddressResponse {
     address: Address;
 }
 
-// Define the API response type for a single city
 interface CityResponse {
     city: City;
 }
 
-// Define the API response type for a single rest day
 interface RestDayResponse {
     rest_day: RestDay;
 }
 
-// Define the API response type for a list of muscle groups
 interface MouscleGroupResponse {
     muscle_group: MuscleGroup;
 }
 
-// Define the API response type for a list of exercises
 interface ExerciseResponse {
     exercise: Exercise;
 }
